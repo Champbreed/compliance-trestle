@@ -202,6 +202,12 @@ jobs:
 
     # --- Generate provenance for the ACTUAL RELEASE ARTIFACTS ---
 
+    - name: Generate SLSA build provenance
+      if: steps.release.outputs.released == 'true'
+      uses: actions/attest@1c6ec35b91b93fbf2df65ecf56a59654cc3ec9fa # v1.4.4
+      with:
+        subject-path: "dist/*"
+
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
       # NOTE: DO NOT wrap the conditional in ${{ }} as it will always evaluate to true.
